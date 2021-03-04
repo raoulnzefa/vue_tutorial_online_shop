@@ -1,10 +1,10 @@
 <template>
   <div class="v-catalog">
-    <h1>catalog</h1>
+    <h1>Catalog</h1>
     <div class="v-catalog__list">
       <v-catalog-item
-          v-for="product in PRODUCTS"
-          :key="product.article"
+          v-for="(product, i) in PRODUCTS"
+          :key="i"
           :product__data="product"
           @addToCart="addToCart"
       />
@@ -21,9 +21,7 @@ export default {
     vCatalogItem
   },
   data() {
-    return {
-
-    }
+    return {}
   },
   methods: {
     ...mapActions([

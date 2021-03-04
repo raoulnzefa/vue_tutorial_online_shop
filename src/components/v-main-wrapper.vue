@@ -2,7 +2,7 @@
   <div class="v-main-wrapper">
 <!--    <p>{{title}}</p>-->
     <v-catalog/>
-    <v-card
+    <v-cart
         v-if="CART.length"
         :cart_data="CART"
     />
@@ -11,13 +11,13 @@
 
 <script>
 import vCatalog from './v-catalog'
-import vCard from './v-cart'
+import vCart from './v-cart'
 import {mapGetters} from 'vuex'
 export default {
   name: "v-main-wrapper.vue",
   components: {
     vCatalog,
-    vCard
+    vCart
 },
   props: {},
   data() {
@@ -39,12 +39,12 @@ export default {
 </script>
 
 <style scoped>
-.v-main-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 900px;
-  margin: 0 auto;
-}
+  .v-main-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
 </style>
