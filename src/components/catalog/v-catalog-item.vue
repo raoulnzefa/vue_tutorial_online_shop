@@ -2,7 +2,7 @@
  <div class="v-catalog-item">
    <img class="v-catalog-item__image" :src=" require('../../assets/images/' + product__data.image)" alt="catalog img item">
    <p class="v-catalog-item__name">{{product__data.name}}</p>
-   <p class="v-catalog-item__price">price: {{product__data.price}} Р.</p>
+   <p class="v-catalog-item__price">price: {{Math.round(product__data.price)}} Р.</p>
    <button
        class="v-catalog-item__add_to_cart_btn btn"
        @click="addToCart"

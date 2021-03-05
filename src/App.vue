@@ -13,9 +13,7 @@ export default {
     vMainWrapper
   }
 }
-
 </script>
-
 
 <style lang="scss">
 #app {
