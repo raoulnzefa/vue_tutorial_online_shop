@@ -1,6 +1,6 @@
 <template>
   <div class="v-cart-item">
-    <img class="v-cart-item__image" :src="require('../assets/images/'+ cart_item_data.image)" alt="image">
+    <img class="v-cart-item__image" :src="require('../../assets/images/'+ cart_item_data.image)" alt="image">
     <div class="v-cart-info">
       <p>{{cart_item_data.name}}</p>
       <p>{{cart_item_data.price}}</p>
@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted() {
-    this.$set(this.cart_item_data, 'quantity', 1)
+
   },
   methods: {
     decrementItem() {
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/styles/styles.scss";
+@import "../../assets/styles/styles";
   .v-cart-item {
     display: flex;
     flex-wrap: nowrap;

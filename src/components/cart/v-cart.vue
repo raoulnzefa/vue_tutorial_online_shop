@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/styles/styles.scss";
+@import "../../assets/styles/styles";
   .v-cart {
     width: 100%;
     margin-bottom: 100px;

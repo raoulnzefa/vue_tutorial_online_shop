@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import vCatalogItem from  './v-catalog-item'
+import vCatalogItem from './v-catalog-item'
 import {mapActions, mapGetters} from 'vuex'
 export default {
   name: "v-catalog",
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/styles/styles.scss";
+@import "../../assets/styles/styles";
   .v-catalog {
     &__list {
       display: flex;
