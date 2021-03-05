@@ -1,2 +1,11 @@
 @import "virebles";
 
+.btn {
+  padding: $padding $padding*2;
+  background: $green-bg;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+}
