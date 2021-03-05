@@ -4,6 +4,7 @@
       <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
     </router-link>
     <h1>Catalog</h1>
+    <v-select></v-select>
     <div class="v-catalog__list">
       <v-catalog-item
           v-for="(product, i) in PRODUCTS"
@@ -17,11 +18,13 @@
 
 <script>
 import vCatalogItem from './v-catalog-item'
+import vSelect from '../v-select'
 import {mapActions, mapGetters} from 'vuex'
 export default {
   name: "v-catalog",
   components: {
-    vCatalogItem
+    vCatalogItem,
+    vSelect
   },
   data() {
     return {}
