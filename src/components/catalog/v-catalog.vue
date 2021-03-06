@@ -4,14 +4,20 @@
       <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
     </router-link>
     <h1>Catalog</h1>
-    <v-select></v-select>
+    <v-select
+      :options="options"
+      @select="optionSelect"
+      :selected="selected"
+    />
     <div class="v-catalog__list">
       <v-catalog-item
           v-for="(product, i) in PRODUCTS"
           :key="i"
           :product__data="product"
           @addToCart="addToCart"
+
       />
+      <p>Selected option goes here: {{selected}}</p>
     </div>
   </div>
 </template>
@@ -27,7 +33,17 @@ export default {
     vSelect
   },
   data() {
-    return {}
+    return {
+      options:
+          [
+            {name : 'option 1', value: 1},
+            {name : 'option 2', value: 2},
+            {name : 'option 3', value: 3},
+            {name : 'option 4', value: 4},
+            {name : 'option 5', value: 5}
+          ],
+      selected: 'Select',
+    }
   },
   methods: {
     ...mapActions([
@@ -36,6 +52,9 @@ export default {
     ]),
     addToCart(data) {
       this.ADD_TO_CART(data)
+    },
+    optionSelect(option) {
+      this.selected = option.name
     }
   },
   mounted() {
