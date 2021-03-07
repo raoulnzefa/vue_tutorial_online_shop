@@ -5,13 +5,13 @@
     </router-link>
     <h1>Catalog</h1>
     <v-select
-      :options="options"
-      @select="optionSelect"
+      :options="categories"
+      @select="sortByCaegories"
       :selected="selected"
     />
     <div class="v-catalog__list">
       <v-catalog-item
-          v-for="(product, i) in PRODUCTS"
+          v-for="(product, i) in filteredProducts"
           :key="i"
           :product__data="product"
           @addToCart="addToCart"
@@ -34,15 +34,14 @@ export default {
   },
   data() {
     return {
-      options:
+      categories:
           [
-            {name : 'option 1', value: 1},
-            {name : 'option 2', value: 2},
-            {name : 'option 3', value: 3},
-            {name : 'option 4', value: 4},
-            {name : 'option 5', value: 5}
+            {name : 'Все', value: 'All'},
+            {name : 'Мужские', value: 'м'},
+            {name: 'Женские', value: 'ж'}
           ],
-      selected: 'Select',
+      selected: 'Все',
+      sortedProducts: []
     }
   },
   methods: {
@@ -53,7 +52,14 @@ export default {
     addToCart(data) {
       this.ADD_TO_CART(data)
     },
-    optionSelect(option) {
+    sortByCaegories(option) {
+      this.sortedProducts = []
+      let vm = this
+      this.PRODUCTS.map((item)=> {
+        if(item.category === option.name) {
+          vm.sortedProducts.push(item)
+        }
+      })
       this.selected = option.name
     }
   },
@@ -69,7 +75,14 @@ export default {
     ...mapGetters([
       'PRODUCTS',
         'CART'
-    ])
+    ]),
+    filteredProducts() {
+      if(this.sortedProducts.length) {
+        return this.sortedProducts
+      }else {
+        return this.PRODUCTS
+      }
+    }
   }
 }
 </script>
