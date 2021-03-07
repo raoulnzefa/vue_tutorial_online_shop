@@ -5,7 +5,7 @@
         @click="arrOptionsVisible = !arrOptionsVisible"
     >{{selected}}</p>
     <div class="options"
-      v-if="arrOptionsVisible"
+      v-if="arrOptionsVisible || isExpanded"
     >
       <p
           v-for="option in options"
@@ -31,6 +31,10 @@ export default {
     selected: {
       type: String,
       default: ''
+    },
+    isExpanded: {
+      type: Boolean,
+      default: false
     },
   },
   data(){
