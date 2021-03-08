@@ -1,24 +1,47 @@
 <template>
   <div class="v-catalog">
     <router-link :to="{name: 'cart', params: {cart_data: CART}}">
-      <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
+      <div class="v-catalog__link_to_cart">Cart: {{ CART.length }}</div>
     </router-link>
     <h1>Catalog</h1>
-    <v-select
-      :options="categories"
-      @select="sortByCaegories"
-      :selected="selected"
-      :isExpanded='IS_DESKTOP'
-    />
+    <div class="filters">
+      <v-select
+          :options="categories"
+          @select="sortByCategories"
+          :selected="selected"
+          :isExpanded='IS_DESKTOP'
+      />
+      <div class="range-slider">
+        <input
+            type="range"
+            min="0"
+            max="10000"
+            step="10"
+            v-model.number="minPrice"
+            @change="setRangeSlider"
+        >
+        <input
+            type="range"
+            min="0"
+            max="10000"
+            step="10"
+            v-model.number="maxPrice"
+            @change="setRangeSlider"
+        >
+      </div>
+      <div class="range-values">
+        <p>Min: {{ minPrice }}</p>
+        <p>Max: {{ maxPrice }}</p>
+      </div>
+    </div>
     <div class="v-catalog__list">
       <v-catalog-item
           v-for="(product, i) in filteredProducts"
           :key="i"
           :product__data="product"
           @addToCart="addToCart"
-
       />
-      <p>Selected option goes here: {{selected}}</p>
+      <p>Selected option goes here: {{ selected }}</p>
     </div>
   </div>
 </template>
@@ -27,6 +50,7 @@
 import vCatalogItem from './v-catalog-item'
 import vSelect from '../v-select'
 import {mapActions, mapGetters} from 'vuex'
+
 export default {
   name: "v-catalog",
   components: {
@@ -37,52 +61,66 @@ export default {
     return {
       categories:
           [
-            {name : 'Все', value: 'All'},
-            {name : 'Мужские', value: 'м'},
+            {name: 'Все', value: 'All'},
+            {name: 'Мужские', value: 'м'},
             {name: 'Женские', value: 'ж'}
           ],
       selected: 'Все',
-      sortedProducts: []
+      sortedProducts: [],
+      minPrice: 0,
+      maxPrice: 10000
     }
   },
   methods: {
     ...mapActions([
-        'GET_PRODUCTS_FROM_API',
-        'ADD_TO_CART'
+      'GET_PRODUCTS_FROM_API',
+      'ADD_TO_CART'
     ]),
+    setRangeSlider() {
+      if (this.minPrice > this.maxPrice) {
+        let tmp = this.maxPrice
+        this.maxPrice = this.minPrice
+        this.minPrice = tmp
+      }
+      this.sortByCategories()
+    },
+    sortByCategories(category) {
+      let vm = this;
+      this.sortedProducts = [...this.PRODUCTS]
+      this.sortedProducts = this.sortedProducts.filter(function(item) {
+        return item.price >= vm.minPrice && item.price <= vm.maxPrice
+      })
+      if(category) {
+        this.sortedProducts = this.sortedProducts.filter(function(e) {
+          vm.selected = category.name
+          return e.category === category.name
+        })
+      }
+    },
     addToCart(data) {
       this.ADD_TO_CART(data)
-    },
-    sortByCaegories(option) {
-      this.sortedProducts = []
-      let vm = this
-      this.PRODUCTS.map((item)=> {
-        if(item.category === option.name) {
-          vm.sortedProducts.push(item)
-        }
-      })
-      this.selected = option.name
     }
   },
   mounted() {
     this.GET_PRODUCTS_FROM_API()
-    .then((response)=> {
-      if(response.data) {
-        console.log("Data arrived")
-      }
-    })
+        .then((response) => {
+          if (response.data) {
+            console.log("Data arrived")
+            this.sortByCategories()
+          }
+        })
   },
   computed: {
     ...mapGetters([
       'PRODUCTS',
-        'CART',
-        'IS_DESKTOP',
-        'IS_MOBILE',
+      'CART',
+      'IS_DESKTOP',
+      'IS_MOBILE',
     ]),
     filteredProducts() {
-      if(this.sortedProducts.length) {
+      if (this.sortedProducts.length) {
         return this.sortedProducts
-      }else {
+      } else {
         return this.PRODUCTS
       }
     }
@@ -92,20 +130,50 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/styles/styles";
-  .v-catalog {
-    &__list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-    }
-    &__link_to_cart {
+
+.v-catalog {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__link_to_cart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: $padding*2;
+    border: 1px solid #aeaeae;
+    border-radius: 10px;
+  }
+
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .range-slider {
+    width: 200px;
+    margin: auto 16px;
+    text-align: center;
+    position: relative;
+
+    input[type=range] {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: $padding*2;
-      border: 1px solid #aeaeae;
-      border-radius: 10px;
+      left: 0;
+      bottom: 0;
+      border: 0;
+      background: #444;
     }
   }
+
+  input[type=range]::-webkit-slider-thumb {
+    z-index: 2;
+    position: relative;
+    top: 2px;
+    margin-top: -7px;
+  }
+}
 </style>
