@@ -1,5 +1,6 @@
 <template>
   <div class="v-main-wrapper">
+    <v-header/>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
@@ -7,8 +8,12 @@
 </template>
 
 <script>
+import vHeader from './layouts/v-header'
 export default {
   name: "v-main-wrapper.vue",
+  components: {
+    vHeader
+  },
   props: {},
   data() {
     return {
@@ -27,7 +32,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 900px;
+    /*max-width: 900px;*/
     margin: 0 auto;
   }
 </style>

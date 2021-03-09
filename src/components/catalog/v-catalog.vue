@@ -141,13 +141,13 @@ export default {
 
   &__link_to_cart {
     position: absolute;
-    top: 10px;
+    top: 110px;
     right: 10px;
     padding: $padding*2;
     border: 1px solid #aeaeae;
     border-radius: 10px;
+    background: #fff;
   }
-
   .filters {
     display: flex;
     justify-content: space-between;
