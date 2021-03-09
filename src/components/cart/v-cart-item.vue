@@ -3,7 +3,7 @@
     <img class="v-cart-item__image" :src="require('../../assets/images/'+ cart_item_data.image)" alt="image">
     <div class="v-cart-info">
       <p>{{cart_item_data.name}}</p>
-      <p>{{Math.round(cart_item_data.price)}}</p>
+      <p>{{cart_item_data.price|toFix|formattedPrice}}</p>
       <p>{{cart_item_data.article}}</p>
     </div>
     <div class="v-cart-item__quantity">
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import toFix from "@/components/filters/toFix";
+import formattedPrice from "@/components/filters/price-format";
 export default {
   name: "v-card-item",
   props: {
@@ -42,6 +44,10 @@ export default {
     deleteFromCart(){
       this.$emit('deleteFromCart')
     }
+  },
+  filters: {
+    toFix,
+    formattedPrice
   }
 }
 </script>

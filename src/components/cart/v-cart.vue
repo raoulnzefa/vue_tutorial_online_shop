@@ -15,7 +15,7 @@
     />
     <div class="v-cart__total">
       <p class="total__name">Total: </p>
-      <p>{{cartTotalCost}} Р.</p>
+      <p>{{cartTotalCost|toFix|formattedPrice}}</p>
     </div>
   </div>
 </template>
@@ -23,7 +23,8 @@
 <script>
 import vCartItem from './v-cart-item'
 import {mapActions} from 'vuex'
-
+import toFix from "@/components/filters/toFix";
+import formattedPrice from "@/components/filters/price-format";
 export default {
   name: "v-cart",
   components: {
@@ -58,7 +59,7 @@ export default {
       let result = []
       if(this.cart_data.length) {
         for(let item of this.cart_data) {
-          result.push(Math.round(item.price) * item.quantity)
+          result.push(item.price * item.quantity)
         }
         result = result.reduce((sum, el)=> {
           return sum + el
@@ -68,6 +69,10 @@ export default {
         return 0
       }
     }
+  },
+  filters: {
+    toFix,
+    formattedPrice
   }
 }
 </script>
