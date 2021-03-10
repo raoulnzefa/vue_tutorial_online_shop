@@ -99,14 +99,30 @@ export default {
     },
     addToCart(data) {
       this.ADD_TO_CART(data)
+    },
+    sortProductsBySearchValue(value) {
+      this.sortedProducts = [...this.PRODUCTS]
+      if (value) {
+        this.sortedProducts = this.sortedProducts.filter((item)=>{
+          return item.name.toLowerCase().includes(value.toLowerCase())
+        })
+      }else {
+        this.sortedProducts = this.PRODUCTS
+      }
+
+    },
+  },
+  watch: {
+    SEARCH_VALUES() {
+      this.sortProductsBySearchValue(this.SEARCH_VALUES)
     }
   },
   mounted() {
     this.GET_PRODUCTS_FROM_API()
         .then((response) => {
           if (response.data) {
-            console.log("Data arrived")
             this.sortByCategories()
+            this.sortProductsBySearchValue(this.SEARCH_VALUES)
           }
         })
   },
@@ -116,6 +132,7 @@ export default {
       'CART',
       'IS_DESKTOP',
       'IS_MOBILE',
+      'SEARCH_VALUES',
     ]),
     filteredProducts() {
       if (this.sortedProducts.length) {

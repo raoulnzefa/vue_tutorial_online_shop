@@ -1,4 +1,7 @@
 export default {
+    SEARCH_VALUES(state) {
+        return state.searchValue
+    },
     IS_MOBILE(state) {
         return state.isMobile
     },

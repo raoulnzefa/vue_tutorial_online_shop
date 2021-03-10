@@ -10,7 +10,12 @@
           v-model="searchValue"
       >
       <button class="search-btn">
-        <i class="material-icons">search</i>
+        <i class="material-icons" @click="search(searchValue)">search</i>
+      </button>
+      <button class="search-btn">
+        <i class="material-icons" @click="clearSearchField">
+          cancel
+        </i>
       </button>
     </div>
 
@@ -18,13 +23,37 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: "v-headers",
   data() {
     return {
       searchValue: ''
     }
-  }
+  },
+  computed: {
+    ...mapGetters([
+      'SEARCH_VALUES'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'GET_SEARCH_VALUE_TO_VUEX'
+    ]),
+    search(value) {
+      this.GET_SEARCH_VALUE_TO_VUEX(value)
+      if(this.$route.path !== '/catalog') {
+        this.$router.push('/catalog')
+      }
+    },
+    clearSearchField() {
+      this.searchValue = ''
+      this.GET_SEARCH_VALUE_TO_VUEX()
+      if(this.$route.path !== '/catalog') {
+        this.$router.push('/catalog')
+      }
+    },
+  },
 }
 </script>
 
