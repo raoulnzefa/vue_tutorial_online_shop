@@ -1,7 +1,7 @@
 <template>
   <div class="v-catalog">
     <router-link :to="{name: 'cart', params: {cart_data: CART}}">
-      <div class="v-catalog__link_to_cart">Cart: {{ CART.length }}</div>
+      <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
     </router-link>
     <h1>Catalog</h1>
     <div class="filters">
@@ -87,11 +87,11 @@ export default {
     sortByCategories(category) {
       let vm = this;
       this.sortedProducts = [...this.PRODUCTS]
-      this.sortedProducts = this.sortedProducts.filter(function(item) {
+      this.sortedProducts = this.sortedProducts.filter((item)=>{
         return item.price >= vm.minPrice && item.price <= vm.maxPrice
       })
       if(category) {
-        this.sortedProducts = this.sortedProducts.filter(function(e) {
+        this.sortedProducts = this.sortedProducts.filter((e)=> {
           vm.selected = category.name
           return e.category === category.name
         })
@@ -109,7 +109,6 @@ export default {
       }else {
         this.sortedProducts = this.PRODUCTS
       }
-
     },
   },
   watch: {
