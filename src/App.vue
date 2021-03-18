@@ -28,7 +28,7 @@ export default {
   mounted() {
     let vm = this
     window.addEventListener('resize', ()=> {
-      if(window.innerWidth>767) {
+      if(window.innerWidth > 767) {
         // this.$store.dispatch('SET_DESKTOP')
         vm.SET_DESKTOP()
         console.log('Desktop', vm.IS_DESKTOP)
