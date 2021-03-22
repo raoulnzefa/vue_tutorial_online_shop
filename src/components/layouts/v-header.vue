@@ -5,13 +5,14 @@
     </router-link>
 
     <div class="search-field">
-      <input
-          type="text"
-          v-model="searchValue"
-      >
-      <button class="search-btn">
+      <div class="input-wrapper">
+        <input
+            type="text"
+            v-model="searchValue"
+            maxlength="20"
+        >
         <i class="material-icons" @click="search(searchValue)">search</i>
-      </button>
+      </div>
       <button class="search-btn">
         <i class="material-icons" @click="clearSearchField">
           cancel
@@ -64,26 +65,40 @@ export default {
     justify-content: space-between;
     align-items: center;
     background: $green-bg;
-    padding: 16px;
+    padding: 16px 0 16px 16px;
     width: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
     img {
       width: 50px;
     }
     .search-field {
       padding: 16px;
       position: relative;
-      right: 200px;
       display: flex;
       justify-content: center;
       align-items: center;
       .search-btn {
-        margin-left: 16px;
+        display: flex;
         background: transparent;
         border: none;
         outline: none;
+      }
+      .input-wrapper {
+        display: flex;
+        position: relative;
+        .material-icons {
+          position: absolute;
+          right: 0;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        input {
+          outline: none;
+          border: none;
+          border-radius: 3px;
+          height: 24px;
+          padding-left: 5px;
+        }
       }
     }
   }
