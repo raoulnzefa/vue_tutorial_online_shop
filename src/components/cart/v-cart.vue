@@ -5,14 +5,17 @@
     </router-link>
     <h2>Cart</h2>
     <p v-if="!cart_data.length">There is no products in cart...</p>
-    <v-cart-item
-        v-for="(item, index) in cart_data"
-        :key="item.article"
-        :cart_item_data="item"
-        @deleteFromCart="deleteFromCart(index)"
-        @decrement="decrement(index)"
-        @increment="increment(index)"
-    />
+    <div class="v-cart__item-wrapper">
+      <v-cart-item
+          v-for="(item, index) in cart_data"
+          :key="item.article"
+          :cart_item_data="item"
+          @deleteFromCart="deleteFromCart(index)"
+          @decrement="decrement(index)"
+          @increment="increment(index)"
+      />
+    </div>
+
     <div class="v-cart__total">
       <p class="total__name">Total: </p>
       <p>{{cartTotalCost|toFix|formattedPrice}}</p>
@@ -84,7 +87,7 @@ export default {
     margin-bottom: 100px;
     &__link_to_cart {
       position: absolute;
-      top: 10px;
+      top: 110px;
       right: 10px;
       padding: $padding*2;
       border: 1px solid #aeaeae;
@@ -101,6 +104,9 @@ export default {
       background: $green-bg;
       color: #fff;
       font-size: 20px;
+    }
+    &__item-wrapper {
+      margin-top: 50px;
     }
     .total__name {
       margin-right: $margin * 2;
