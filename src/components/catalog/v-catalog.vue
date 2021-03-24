@@ -1,47 +1,49 @@
 <template>
   <div class="v-catalog">
-    <router-link :to="{name: 'cart', params: {cart_data: CART}}">
-      <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
-    </router-link>
-    <h1>Catalog</h1>
-    <div class="filters">
-      <v-select
-          :options="categories"
-          @select="sortByCategories"
-          :selected="selected"
-          :isExpanded='IS_DESKTOP'
-      />
-      <div class="range-slider">
-        <input
-            type="range"
-            min="0"
-            max="10000"
-            step="10"
-            v-model.number="minPrice"
-            @change="setRangeSlider"
-        >
-        <input
-            type="range"
-            min="0"
-            max="10000"
-            step="10"
-            v-model.number="maxPrice"
-            @change="setRangeSlider"
-        >
+    <div class="container">
+      <router-link :to="{name: 'cart', params: {cart_data: CART}}">
+        <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
+      </router-link>
+      <h1>Catalog</h1>
+      <div class="filters">
+        <v-select
+            :options="categories"
+            @select="sortByCategories"
+            :selected="selected"
+            :isExpanded='IS_DESKTOP'
+        />
+        <div class="range-slider">
+          <input
+              type="range"
+              min="0"
+              max="10000"
+              step="10"
+              v-model.number="minPrice"
+              @change="setRangeSlider"
+          >
+          <input
+              type="range"
+              min="0"
+              max="10000"
+              step="10"
+              v-model.number="maxPrice"
+              @change="setRangeSlider"
+          >
+        </div>
+        <div class="range-values">
+          <p>Min: {{ minPrice }}</p>
+          <p>Max: {{ maxPrice }}</p>
+        </div>
       </div>
-      <div class="range-values">
-        <p>Min: {{ minPrice }}</p>
-        <p>Max: {{ maxPrice }}</p>
+      <div class="v-catalog__list">
+        <v-catalog-item
+            v-for="(product, i) in filteredProducts"
+            :key="i"
+            :product__data="product"
+            @addToCart="addToCart"
+        />
+<!--        <p>Selected option goes here: {{ selected }}</p>-->
       </div>
-    </div>
-    <div class="v-catalog__list">
-      <v-catalog-item
-          v-for="(product, i) in filteredProducts"
-          :key="i"
-          :product__data="product"
-          @addToCart="addToCart"
-      />
-      <p>Selected option goes here: {{ selected }}</p>
     </div>
   </div>
 </template>
@@ -146,51 +148,71 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/styles/styles";
+.container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  .v-catalog {
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      //margin: 0 -10px;
+    }
 
-.v-catalog {
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__link_to_cart {
-    position: absolute;
-    top: 110px;
-    right: 10px;
-    padding: $padding*2;
-    border: 1px solid #aeaeae;
-    border-radius: 10px;
-    background: #fff;
-  }
-  .filters {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 50px;
-  }
-
-  .range-slider {
-    width: 200px;
-    margin: auto 16px;
-    text-align: center;
-    position: relative;
-
-    input[type=range] {
+    &__link_to_cart {
       position: absolute;
-      left: 0;
-      bottom: 0;
-      border: 0;
-      background: #444;
+      top: 110px;
+      right: 10px;
+      padding: $padding*2;
+      border: 1px solid #aeaeae;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      padding: 0 10px;
+    }
+
+    .range-slider {
+      width: 200px;
+      margin: auto 16px;
+      text-align: center;
+      position: relative;
+
+      input[type=range] {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border: 0;
+        background: #444;
+      }
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      z-index: 2;
+      position: relative;
+      top: 2px;
+      margin-top: -7px;
     }
   }
-
-  input[type=range]::-webkit-slider-thumb {
-    z-index: 2;
-    position: relative;
-    top: 2px;
-    margin-top: -7px;
+}
+@media (max-width: 960px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (max-width: 720px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (max-width: 576px) {
+  .container {
+    max-width: 576px;
   }
 }
 </style>

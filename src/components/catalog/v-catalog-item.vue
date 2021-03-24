@@ -80,10 +80,12 @@ name: "v-catalog-item",
 <style lang="scss" scoped>
 @import "../../assets/styles/styles";
   .v-catalog-item {
-    flex-basis: 25%;
+    min-width: 320px;
+    width: calc(25% - 20px);
     box-shadow: 0 0 8px 0 #e0e0e0;
     padding: $padding*2;
-    margin-bottom: $margin*2;
+    margin: 0 10px $margin*2 10px;
+
     &__image {
       max-width: 100px;
       width: 100%;
@@ -96,5 +98,20 @@ name: "v-catalog-item",
 }
 .fade-enter {
   opacity: 0;
+}
+@media (max-width: 960px) {
+  .v-catalog-item {
+    width: calc(100% / 3 - 20px);
+  }
+}
+@media (max-width: 720px) {
+  .v-catalog-item {
+    width: calc(50% - 20px);
+  }
+}
+@media (max-width: 576px) {
+  .v-catalog-item {
+    width: 100%;
+  }
 }
 </style>

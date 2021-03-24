@@ -74,14 +74,19 @@ export default {
       top: 30px;
       right: 0;
       width: 100%;
+      border-radius:0 0 5px 5px;
       p{
         &:hover {
           background: #e7e7e7;
         }
       }
+      p:not(:last-child) {
+        border-bottom: 1px solid #e7e7e7;
+      }
     }
     .title {
       border: 1px solid #aeaeae;
+      border-radius: 5px 5px 0 0;
     }
   }
 </style>
